@@ -1039,7 +1039,7 @@ class HUBDatasetStats():
     """ Class for generating HUB dataset JSON and `-hub` dataset directory
 
     Arguments
-        path:           Path to data.yaml or data.zip (with data.yaml inside data.zip)
+        path:           Path to person_data.yaml or data.zip (with person_data.yaml inside data.zip)
         autodownload:   Attempt to download dataset if not found locally
 
     Usage
@@ -1070,7 +1070,7 @@ class HUBDatasetStats():
 
     @staticmethod
     def _find_yaml(dir):
-        # Return data.yaml file
+        # Return person_data.yaml file
         files = list(dir.glob('*.yaml')) or list(dir.rglob('*.yaml'))  # try root level first and then recursive
         assert files, f'No *.yaml file found in {dir}'
         if len(files) > 1:
@@ -1081,7 +1081,7 @@ class HUBDatasetStats():
 
     def _unzip(self, path):
         # Unzip data.zip
-        if not str(path).endswith('.zip'):  # path is data.yaml
+        if not str(path).endswith('.zip'):  # path is person_data.yaml
             return False, None, path
         assert Path(path).is_file(), f'Error unzipping {path}, file not found'
         unzip_file(path, path=path.parent)
