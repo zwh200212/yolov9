@@ -314,6 +314,7 @@ def train(hyp, opt, device, callbacks):  # hyp is path/to/hyp.yaml or hyp dictio
             with torch.cuda.amp.autocast(amp):
                 pred = model(imgs)  # forward
                 loss, loss_items = compute_loss(pred, targets.to(device))  # loss scaled by batch_size
+                # print('pred, targets.to(device)',pred, targets.to(device))
                 if RANK != -1:
                     loss *= WORLD_SIZE  # gradient averaged between devices in DDP mode
                 if opt.quad:
@@ -443,7 +444,7 @@ def parse_opt(known=False):
     parser = argparse.ArgumentParser()
     # parser.add_argument('--weights', type=str, default=ROOT / 'yolo.pt', help='initial weights path')
     # parser.add_argument('--cfg', type=str, default='', help='model.yaml path')
-    parser.add_argument('--weights', type=str, default='yolov9-c-converted.pt', help='initial weights path')
+    parser.add_argument('--weights', type=str, default='last.pt', help='initial weights path')
     parser.add_argument('--cfg', type=str, default='models/detect/yolov9-c.yaml', help='model.yaml path')
     parser.add_argument('--data', type=str, default=ROOT / 'data/person_data.yaml', help='dataset.yaml path')
     parser.add_argument('--hyp', type=str, default=ROOT / 'data/hyps/hyp.scratch-high.yaml', help='hyperparameters path')
